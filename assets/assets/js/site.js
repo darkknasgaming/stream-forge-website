@@ -1,0 +1,2 @@
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.animate([{opacity:0,transform:'translateY(24px)'},{opacity:1,transform:'none'}],{duration:650,easing:'cubic-bezier(.2,.7,.2,1)',fill:'both'});observer.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.card,.showcase,.video-card,.step,.tutorial,.cta').forEach(el=>observer.observe(el));
+document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());
