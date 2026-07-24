@@ -1,40 +1,41 @@
-# Stream Forge Website
+# Stream Forge Website v3
 
-Official static website for **Stream Forge** at `forgeyourstream.com`.
+A static GitHub Pages site for https://forgeyourstream.com
 
-## Preview locally
+## Publish
 
-Open `index.html` in a browser, or run a small local server:
+1. Upload the contents of this folder directly to the repository root.
+2. In GitHub: Settings → Pages.
+3. Choose:
+   - Source: Deploy from a branch
+   - Branch: main
+   - Folder: / (root)
+4. Do not add a custom GitHub Actions workflow.
 
-```bash
-python -m http.server 8080
+## Videos
+
+Upload these files when ready:
+
+- `assets/videos/mission-control.mp4`
+- `assets/videos/music-overlay.mp4`
+- `assets/videos/overlay-studio.mp4`
+
+Until those files exist, the site displays branded video placeholders.
+
+For best performance, keep each homepage clip short and compressed:
+- 15–45 seconds
+- 1080p or 720p
+- H.264 MP4
+- ideally under 10–15 MB
+
+Full tutorials can be hosted on YouTube and linked from `tutorials.html`.
+
+## Download button
+
+In `index.html`, replace:
+
+```html
+href="#"
 ```
 
-Then visit `http://localhost:8080`.
-
-## Publish with GitHub Pages
-
-1. Create a public GitHub repository, for example `stream-forge-website`.
-2. Upload every file in this project to the repository root.
-3. In GitHub, open **Settings → Pages**.
-4. Under **Build and deployment**, choose **GitHub Actions**.
-5. The included workflow will deploy the site automatically after each push to `main`.
-6. In the Pages settings, confirm the custom domain is `forgeyourstream.com` and enable **Enforce HTTPS** after DNS is verified.
-
-## Namecheap DNS
-
-In Namecheap **Advanced DNS**, point the domain at GitHub Pages using the records shown in GitHub's current custom-domain documentation. GitHub may update recommended records, so verify them before changing DNS.
-
-## Before public launch
-
-Update these placeholders in `index.html`:
-
-- Download button URL
-- GitHub/support links
-- Confirmed OBS/Streamlabs support wording
-- Version number when shown
-- Privacy and terms pages
-
-## Brand asset
-
-`assets/stream-forge-logo.png` is used as the hero artwork and favicon. Replace it with an optimized production asset later if desired.
+on the element with `id="download-link"` with your GitHub Release installer URL.
