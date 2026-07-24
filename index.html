@@ -3,29 +3,254 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b0b0d" />
-  <meta name="description" content="Stream Forge helps streamers build, customize and automate their live stream from one powerful desktop app." />
+  <meta name="theme-color" content="#09090b" />
+  <meta name="description" content="Stream Forge helps streamers build, customise and automate their live stream from one focused desktop app." />
   <meta property="og:title" content="Stream Forge — Forge Your Stream" />
-  <meta property="og:description" content="Build, customize and automate your stream from one powerful desktop app." />
+  <meta property="og:description" content="Setup. Customize. Stream. Anywhere." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://forgeyourstream.com/" />
   <meta property="og:image" content="https://forgeyourstream.com/assets/stream-forge-logo.png" />
   <title>Stream Forge — Forge Your Stream</title>
   <link rel="icon" href="assets/stream-forge-logo.png" />
-  <link rel="stylesheet" href="styles.css" />
-  <script defer src="script.js"></script>
+
+  <style>
+    :root {
+      --bg: #09090b;
+      --panel: #121216;
+      --panel-2: #18181d;
+      --text: #f7f7f8;
+      --muted: #aaaab2;
+      --ember: #ff7926;
+      --ember-2: #ffad45;
+      --line: rgba(255, 132, 48, 0.18);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 80% 8%, rgba(255, 98, 20, 0.14), transparent 28rem),
+        radial-gradient(circle at 15% 45%, rgba(255, 132, 48, 0.08), transparent 24rem),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img, video { max-width: 100%; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    #embers {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.65;
+      z-index: -1;
+    }
+
+    .wrap { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+    .section { padding: 100px 0; }
+    .alt { background: linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0)); }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 74px;
+      padding: 0 max(22px, calc((100vw - var(--max)) / 2));
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(9,9,11,0.84);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 900; letter-spacing: 0.06em; }
+    .brand img { width: 46px; height: 46px; object-fit: contain; border-radius: 12px; }
+    .brand strong { color: var(--ember); }
+
+    nav { display: flex; align-items: center; gap: 28px; }
+    nav a { color: #d8d8dc; font-size: 0.95rem; }
+    nav a:hover { color: white; }
+    .nav-cta { padding: 10px 17px; border: 1px solid rgba(255,121,38,.42); border-radius: 999px; color: white; background: rgba(255,121,38,.09); }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      color: white;
+      padding: 9px 12px;
+    }
+
+    .hero { min-height: 760px; display: grid; place-items: center; padding: 90px 0 70px; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 64px; align-items: center; }
+    .eyebrow { color: var(--ember-2); font-size: .78rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1, h2, h3 { margin-top: 0; line-height: 1.08; }
+    h1 { font-size: clamp(3.3rem, 7vw, 6.6rem); letter-spacing: -.055em; margin-bottom: 25px; }
+    h1 span, h2 span { color: var(--ember); }
+    .lead { max-width: 720px; color: #c2c2c9; font-size: clamp(1.08rem, 2vw, 1.3rem); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin: 32px 0 24px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-weight: 800;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .primary { background: linear-gradient(135deg, var(--ember), #ff4f16); box-shadow: 0 12px 34px rgba(255,86,20,.27); }
+    .secondary { border-color: rgba(255,255,255,.12); background: rgba(255,255,255,.035); }
+    .platform-note { color: var(--muted); font-size: .92rem; }
+    .platform-note span { display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: #48d287; box-shadow: 0 0 16px #48d287; }
+
+    .hero-art { position: relative; display: grid; place-items: center; min-height: 520px; }
+    .hero-art img { position: relative; z-index: 2; width: min(100%, 560px); filter: drop-shadow(0 25px 55px rgba(0,0,0,.45)); }
+    .hero-art::before { content: ""; position: absolute; width: 78%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255,104,26,.28), rgba(255,104,26,.07) 42%, transparent 70%); filter: blur(8px); }
+
+    .trust-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; border-block: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.05); }
+    .trust-strip div { padding: 28px 20px; text-align: center; background: #0e0e11; }
+    .trust-strip strong, .trust-strip span { display: block; }
+    .trust-strip span { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+
+    .section-heading { max-width: 760px; margin-bottom: 42px; }
+    .section-heading h2 { font-size: clamp(2.25rem, 4.5vw, 4.2rem); letter-spacing: -.04em; margin-bottom: 14px; }
+    .section-heading p { color: var(--muted); font-size: 1.08rem; }
+
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card, .price-card, .video-card {
+      border: 1px solid rgba(255,255,255,.075);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(27,27,32,.94), rgba(13,13,16,.98));
+      box-shadow: var(--shadow);
+    }
+    .card { padding: 28px; min-height: 230px; }
+    .card .icon { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 22px; border-radius: 14px; background: rgba(255,121,38,.1); color: var(--ember); font-size: 1.5rem; }
+    .card h3 { margin-bottom: 9px; font-size: 1.25rem; }
+    .card p { color: var(--muted); margin: 0; }
+
+    .showcase { display: grid; grid-template-columns: .8fr 1.2fr; gap: 50px; align-items: center; }
+    .showcase ul { padding-left: 20px; color: #ccccd2; }
+    .app-window { overflow: hidden; border: 1px solid rgba(255,122,38,.19); border-radius: 22px; background: #0c0c0f; box-shadow: 0 35px 80px rgba(0,0,0,.45); }
+    .window-bar { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 16px; border-bottom: 1px solid rgba(255,255,255,.06); color: var(--muted); font-size: .75rem; }
+    .window-bar span { width: 10px; height: 10px; border-radius: 50%; background: #3b3b42; }
+    .window-bar b { margin-left: 10px; }
+    .window-body { display: grid; grid-template-columns: 190px 1fr; min-height: 410px; }
+    .window-body aside { padding: 22px 16px; border-right: 1px solid rgba(255,255,255,.06); background: #0a0a0d; }
+    .window-body aside strong { display: block; color: var(--ember); margin-bottom: 20px; }
+    .window-body aside a { display: block; padding: 10px 12px; margin: 4px 0; border-radius: 10px; color: #aaaab2; }
+    .window-body aside .active { color: white; background: rgba(255,121,38,.12); }
+    .dashboard { padding: 24px; }
+    .dash-head { display: flex; justify-content: space-between; align-items: center; }
+    .dash-head small, .dash-card small { color: var(--ember-2); letter-spacing: .12em; }
+    .status, .pill { color: #79e1a4; font-size: .78rem; }
+    .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px; }
+    .dash-card { padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,.06); background: #141419; }
+    .dash-card.wide { grid-column: 1 / -1; }
+    .scene-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-top: 13px; }
+    .scene-row button { padding: 11px 8px; border: 1px solid rgba(255,255,255,.07); border-radius: 10px; background: #1d1d23; color: white; }
+    .wave { margin: 20px 0; color: var(--ember); letter-spacing: .14em; }
+
+    .video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .video-card { overflow: hidden; }
+    .video-frame { position: relative; aspect-ratio: 16/9; background: #060608; overflow: hidden; }
+    .video-frame video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .video-frame::after { content: ""; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.04); }
+    .video-placeholder { display: grid; place-items: center; padding: 25px; text-align: center; background: radial-gradient(circle, rgba(255,107,29,.18), transparent 58%), #08080a; }
+    .video-placeholder span { display: block; color: var(--ember); font-size: 2.5rem; }
+    .video-placeholder strong { display: block; margin-top: 10px; }
+    .video-placeholder p { margin: 6px 0 0; color: var(--muted); }
+    .video-copy { padding: 22px; }
+    .video-copy h3 { margin: 7px 0 9px; }
+    .video-copy p { color: var(--muted); margin: 0; }
+    .video-label { color: var(--ember-2); font-size: .72rem; font-weight: 900; letter-spacing: .13em; }
+
+    .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; counter-reset: step; }
+    .step { position: relative; padding: 28px; border-left: 1px solid var(--line); }
+    .step::before { counter-increment: step; content: "0" counter(step); display: block; color: var(--ember); font-weight: 900; margin-bottom: 20px; }
+    .step p { color: var(--muted); }
+
+    .price-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; }
+    .price-card { position: relative; padding: 34px; }
+    .price-card.featured { border-color: rgba(255,121,38,.33); }
+    .tier { color: var(--ember-2); font-weight: 900; letter-spacing: .14em; }
+    .price-card h3 { font-size: 2rem; }
+    .price-card li, .price-card p { color: var(--muted); }
+    .coming { position: absolute; top: 18px; right: 18px; padding: 6px 10px; border-radius: 99px; background: rgba(255,121,38,.1); color: var(--ember); font-size: .7rem; font-weight: 900; }
+    .disabled { opacity: .5; pointer-events: none; }
+
+    .download { display: flex; justify-content: space-between; align-items: center; gap: 30px; padding: 44px; border: 1px solid rgba(255,121,38,.2); border-radius: 26px; background: radial-gradient(circle at 85% 20%, rgba(255,100,20,.18), transparent 40%), #111115; }
+    .download h2 { margin-bottom: 10px; font-size: clamp(2rem, 4vw, 3.4rem); }
+    .download p { color: var(--muted); }
+
+    .faq details { max-width: 850px; padding: 22px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .faq summary { cursor: pointer; font-weight: 800; }
+    .faq details p { color: var(--muted); }
+
+    footer { padding: 48px max(20px, calc((100vw - var(--max)) / 2)); border-top: 1px solid rgba(255,255,255,.07); color: var(--muted); }
+    .footer-top { display: flex; justify-content: space-between; gap: 30px; align-items: center; }
+    .footer-links { display: flex; gap: 22px; }
+    footer small { display: block; margin-top: 26px; }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 950px) {
+      .hero-grid, .showcase { grid-template-columns: 1fr; }
+      .hero-art { min-height: auto; }
+      .feature-grid, .video-grid { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .download { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (max-width: 720px) {
+      .site-header { min-height: 68px; }
+      .menu-toggle { display: block; }
+      nav { display: none; position: absolute; top: 68px; left: 16px; right: 16px; flex-direction: column; align-items: stretch; gap: 8px; padding: 16px; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; background: #111115; box-shadow: var(--shadow); }
+      nav.open { display: flex; }
+      nav a { padding: 10px; }
+      .hero { min-height: auto; padding-top: 70px; }
+      .hero-grid { gap: 15px; }
+      .trust-strip, .feature-grid, .video-grid, .steps, .price-grid { grid-template-columns: 1fr; }
+      .window-body { grid-template-columns: 1fr; }
+      .window-body aside { display: none; }
+      .scene-row { grid-template-columns: 1fr 1fr; }
+      .dash-grid { grid-template-columns: 1fr; }
+      .dash-card.wide { grid-column: auto; }
+      .footer-top { align-items: flex-start; flex-direction: column; }
+      .footer-links { flex-wrap: wrap; }
+      .section { padding: 74px 0; }
+    }
+  </style>
 </head>
 <body>
   <canvas id="embers" aria-hidden="true"></canvas>
+
   <header class="site-header">
     <a class="brand" href="#top" aria-label="Stream Forge home">
       <img src="assets/stream-forge-logo.png" alt="" />
       <span>STREAM <strong>FORGE</strong></span>
     </a>
-    <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+
     <nav id="main-nav" aria-label="Main navigation">
       <a href="#features">Features</a>
       <a href="#showcase">Showcase</a>
+      <a href="#videos">Videos</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
       <a class="nav-cta" href="#download">Download</a>
@@ -33,20 +258,22 @@
   </header>
 
   <main id="top">
-    <section class="hero section">
-      <div class="hero-copy reveal">
-        <p class="eyebrow">Setup. Customize. Stream. Anywhere.</p>
-        <h1>Forge your <span>perfect stream.</span></h1>
-        <p class="lead">Stream Forge is the streaming assistant that remembers the details, reduces your mental load, and puts your scenes, overlays, music and automation in one place.</p>
-        <div class="hero-actions">
-          <a class="button primary" href="#download">Download Free</a>
-          <a class="button secondary" href="#features">Explore Features</a>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="reveal">
+          <p class="eyebrow">Setup. Customize. Stream. Anywhere.</p>
+          <h1>Forge your <span>perfect stream.</span></h1>
+          <p class="lead">Stream Forge is the streaming assistant that remembers the details, reduces your mental load, and puts scenes, overlays, music and automation in one focused workspace.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#download">Download Free</a>
+            <a class="button secondary" href="#videos">See It in Action</a>
+          </div>
+          <div class="platform-note"><span></span> Built for Windows 10 and 11</div>
         </div>
-        <div class="platform-note"><span></span> Built for Windows 10 and 11</div>
-      </div>
-      <div class="hero-art reveal">
-        <div class="glow"></div>
-        <img src="assets/stream-forge-logo.png" alt="Stream Forge dragon, blacksmith and anvil artwork" />
+
+        <div class="hero-art reveal">
+          <img src="assets/stream-forge-logo.png" alt="Stream Forge dragon, blacksmith and anvil artwork" />
+        </div>
       </div>
     </section>
 
@@ -57,85 +284,251 @@
     </section>
 
     <section id="features" class="section">
-      <div class="section-heading reveal">
-        <p class="eyebrow">Everything you need</p>
-        <h2>Run the stream. Not the checklist.</h2>
-        <p>Stream Forge keeps the tools you reach for every stream close, clear and ready.</p>
-      </div>
-      <div class="feature-grid">
-        <article class="card reveal"><span class="icon">◫</span><h3>Mission Control</h3><p>Control scenes, stream actions and essential tools from one focused dashboard.</p></article>
-        <article class="card reveal"><span class="icon">⌁</span><h3>Music Overlays</h3><p>Show polished now-playing information with a wide animated waveform.</p></article>
-        <article class="card reveal"><span class="icon">✦</span><h3>Stream Assistant</h3><p>Get useful reminders and status alerts without noisy interruptions.</p></article>
-        <article class="card reveal"><span class="icon">⚙</span><h3>Automation</h3><p>Build repeatable stream routines for intros, breaks, scene changes and more.</p></article>
-        <article class="card reveal"><span class="icon">◇</span><h3>Overlay Studio</h3><p>Customize branded scenes and browser overlays without rebuilding everything.</p></article>
-        <article class="card reveal"><span class="icon">⌘</span><h3>Global Hotkeys</h3><p>Trigger the actions you need even while another app or game is in focus.</p></article>
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Everything you need</p>
+          <h2>Run the stream. <span>Not the checklist.</span></h2>
+          <p>Stream Forge keeps the tools you reach for every stream close, clear and ready.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="card reveal"><span class="icon">◫</span><h3>Mission Control</h3><p>Control scenes, stream actions and essential tools from one focused dashboard.</p></article>
+          <article class="card reveal"><span class="icon">⌁</span><h3>Music Overlays</h3><p>Show polished now-playing information with a wide animated waveform.</p></article>
+          <article class="card reveal"><span class="icon">✦</span><h3>Stream Assistant</h3><p>Get useful reminders and status alerts without noisy interruptions.</p></article>
+          <article class="card reveal"><span class="icon">⚙</span><h3>Automation</h3><p>Build repeatable routines for intros, breaks, scene changes and more.</p></article>
+          <article class="card reveal"><span class="icon">◇</span><h3>Overlay Studio</h3><p>Customise branded scenes and browser overlays without rebuilding everything.</p></article>
+          <article class="card reveal"><span class="icon">⌘</span><h3>Global Hotkeys</h3><p>Trigger important actions even while another app or game is in focus.</p></article>
+        </div>
       </div>
     </section>
 
-    <section id="showcase" class="section showcase">
-      <div class="showcase-copy reveal">
-        <p class="eyebrow">Built around your workflow</p>
-        <h2>One forge. Endless possibilities.</h2>
-        <p>Design your scenes, connect your stream tools, keep your branding consistent and save your setup for next time.</p>
-        <ul>
-          <li>Forge Studio and Overlay Studio</li>
-          <li>Scene and theme management</li>
-          <li>Discord webhook integrations</li>
-          <li>Data backup and restore</li>
-        </ul>
-      </div>
-      <div class="app-window reveal" aria-label="Stream Forge interface concept">
-        <div class="window-bar"><span></span><span></span><span></span><b>STREAM FORGE — MISSION CONTROL</b></div>
-        <div class="window-body">
-          <aside>
-            <strong>STREAM FORGE</strong>
-            <a class="active">Mission Control</a><a>Scenes</a><a>Overlay Studio</a><a>Music</a><a>Assistant</a><a>Settings</a>
-          </aside>
-          <div class="dashboard">
-            <div class="dash-head"><div><small>WELCOME BACK</small><h3>Ready to forge?</h3></div><span class="status">● SYSTEM READY</span></div>
-            <div class="dash-grid">
-              <div class="dash-card wide"><small>QUICK SCENES</small><div class="scene-row"><button>Starting Soon</button><button>Gameplay</button><button>Music</button><button>BRB</button></div></div>
-              <div class="dash-card"><small>NOW PLAYING</small><div class="wave">▂▅▃▇▆▂▅▇▃▆▂▇▅</div><b>Forge the Stream</b></div>
-              <div class="dash-card"><small>ASSISTANT</small><p>Your stream setup is ready.</p><span class="pill">All checks passed</span></div>
+    <section id="showcase" class="section alt">
+      <div class="wrap showcase">
+        <div class="reveal">
+          <p class="eyebrow">Built around your workflow</p>
+          <h2>One forge. <span>Endless possibilities.</span></h2>
+          <p class="lead">Design your scenes, connect your stream tools, keep your branding consistent and save your setup for next time.</p>
+          <ul>
+            <li>Forge Studio and Overlay Studio</li>
+            <li>Scene and theme management</li>
+            <li>Discord webhook integrations</li>
+            <li>Data backup and restore</li>
+          </ul>
+        </div>
+
+        <div class="app-window reveal" aria-label="Stream Forge interface preview">
+          <div class="window-bar"><span></span><span></span><span></span><b>STREAM FORGE — MISSION CONTROL</b></div>
+          <div class="window-body">
+            <aside>
+              <strong>STREAM FORGE</strong>
+              <a class="active">Mission Control</a><a>Scenes</a><a>Overlay Studio</a><a>Music</a><a>Assistant</a><a>Settings</a>
+            </aside>
+            <div class="dashboard">
+              <div class="dash-head"><div><small>WELCOME BACK</small><h3>Ready to forge?</h3></div><span class="status">● SYSTEM READY</span></div>
+              <div class="dash-grid">
+                <div class="dash-card wide"><small>QUICK SCENES</small><div class="scene-row"><button>Starting Soon</button><button>Gameplay</button><button>Music</button><button>BRB</button></div></div>
+                <div class="dash-card"><small>NOW PLAYING</small><div class="wave">▂▅▃▇▆▂▅▇▃▆▂▇▅</div><b>Forge the Stream</b></div>
+                <div class="dash-card"><small>ASSISTANT</small><p>Your stream setup is ready.</p><span class="pill">All checks passed</span></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="pricing" class="section pricing">
-      <div class="section-heading reveal">
-        <p class="eyebrow">Start free</p>
-        <h2>Forge first. Upgrade when it earns its place.</h2>
-      </div>
-      <div class="price-grid">
-        <article class="price-card reveal"><p class="tier">FREE</p><h3>£0</h3><p>Everything needed to start building and running your stream.</p><ul><li>Mission Control</li><li>Core scenes and overlays</li><li>Music waveform</li><li>Basic Stream Assistant</li></ul><a class="button secondary" href="#download">Download Free</a></article>
-        <article class="price-card featured reveal"><div class="coming">COMING LATER</div><p class="tier">PRO</p><h3>Built for power users</h3><p>Premium automation, profiles, cloud features and advanced customization.</p><ul><li>Advanced automation</li><li>Multiple stream profiles</li><li>Premium themes</li><li>Cloud backup and sync</li></ul><span class="button disabled">Coming Soon</span></article>
+    <section id="videos" class="section">
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <p class="eyebrow">See the forge in action</p>
+          <h2>Quick demos. <span>Clear tutorials.</span></h2>
+          <p>Show visitors what Stream Forge can do before they download it, then help them get set up step by step.</p>
+        </div>
+
+        <div class="video-grid">
+          <article class="video-card reveal">
+            <div class="video-frame">
+              <video controls muted playsinline preload="metadata" poster="assets/stream-forge-logo.png">
+                <source src="assets/videos/mission-control.mp4" type="video/mp4" />
+                Your browser does not support HTML video.
+              </video>
+            </div>
+            <div class="video-copy">
+              <span class="video-label">QUICK DEMO</span>
+              <h3>Mission Control Tour</h3>
+              <p>See scenes, music and essential stream controls working together.</p>
+            </div>
+          </article>
+
+          <article class="video-card reveal">
+            <div class="video-frame">
+              <video controls muted playsinline preload="metadata" poster="assets/stream-forge-logo.png">
+                <source src="assets/videos/music-overlay.mp4" type="video/mp4" />
+                Your browser does not support HTML video.
+              </video>
+            </div>
+            <div class="video-copy">
+              <span class="video-label">QUICK DEMO</span>
+              <h3>Music Overlay Demo</h3>
+              <p>Watch the now-playing display and wide waveform update live.</p>
+            </div>
+          </article>
+
+          <article class="video-card reveal">
+            <div class="video-frame video-placeholder">
+              <div>
+                <span>▶</span>
+                <strong>Setup tutorials coming soon</strong>
+                <p>Installation, Streamlabs, overlays, Discord and hotkeys.</p>
+              </div>
+            </div>
+            <div class="video-copy">
+              <span class="video-label">TUTORIALS</span>
+              <h3>Learn Stream Forge</h3>
+              <p>Step-by-step help for getting your first stream setup ready.</p>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section id="download" class="section download reveal">
-      <div>
-        <p class="eyebrow">Your forge is waiting</p>
-        <h2>Build a better stream routine.</h2>
-        <p>Download Stream Forge for Windows and make your next setup the one you can reuse.</p>
+    <section class="section alt">
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Get started</p>
+          <h2>From install to live in four steps.</h2>
+        </div>
+        <div class="steps">
+          <div class="step reveal"><h3>Download</h3><p>Get the latest Windows build from the official release page.</p></div>
+          <div class="step reveal"><h3>Connect</h3><p>Configure Streamlabs and any Discord webhooks you use.</p></div>
+          <div class="step reveal"><h3>Customise</h3><p>Add your streamer name, backgrounds, themes and overlays.</p></div>
+          <div class="step reveal"><h3>Go Live</h3><p>Open Mission Control and run your stream from the forge.</p></div>
+        </div>
       </div>
-      <a class="button primary large" href="#" id="download-link" aria-label="Download Stream Forge for Windows">Windows Download Coming Soon</a>
+    </section>
+
+    <section id="pricing" class="section">
+      <div class="wrap">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Start free</p>
+          <h2>Forge first. Upgrade when it earns its place.</h2>
+        </div>
+
+        <div class="price-grid">
+          <article class="price-card reveal">
+            <p class="tier">FREE</p>
+            <h3>£0</h3>
+            <p>Everything needed to start building and running your stream.</p>
+            <ul><li>Mission Control</li><li>Core scenes and overlays</li><li>Music waveform</li><li>Basic Stream Assistant</li></ul>
+            <a class="button secondary" href="#download">Download Free</a>
+          </article>
+
+          <article class="price-card featured reveal">
+            <div class="coming">COMING LATER</div>
+            <p class="tier">PRO</p>
+            <h3>Built for power users</h3>
+            <p>Premium automation, profiles, cloud features and advanced customisation.</p>
+            <ul><li>Advanced automation</li><li>Multiple stream profiles</li><li>Premium themes</li><li>Cloud backup and sync</li></ul>
+            <span class="button secondary disabled">Coming Soon</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="download" class="section">
+      <div class="wrap download reveal">
+        <div>
+          <p class="eyebrow">Your forge is waiting</p>
+          <h2>Build a better stream routine.</h2>
+          <p>Download Stream Forge for Windows and make your next setup the one you can reuse.</p>
+        </div>
+        <a class="button primary" href="#" id="download-link" aria-label="Download Stream Forge for Windows">Windows Download Coming Soon</a>
+      </div>
     </section>
 
     <section id="faq" class="section faq">
-      <div class="section-heading reveal"><p class="eyebrow">FAQ</p><h2>Good to know.</h2></div>
-      <details class="reveal"><summary>Is Stream Forge free?</summary><p>Yes. The plan is to keep a useful free version available, with optional Pro features added later.</p></details>
-      <details class="reveal"><summary>Does it work with OBS and Streamlabs?</summary><p>Stream Forge is being built around modern streaming workflows. Clearly list each supported integration here as release testing is completed.</p></details>
-      <details class="reveal"><summary>Where can I report a bug?</summary><p>Add your GitHub Issues or support link here before launch.</p></details>
+      <div class="wrap">
+        <div class="section-heading reveal"><p class="eyebrow">FAQ</p><h2>Good to know.</h2></div>
+        <details class="reveal"><summary>Is Stream Forge free?</summary><p>Yes. The plan is to keep a useful free version available, with optional Pro features added later.</p></details>
+        <details class="reveal"><summary>Does it work with OBS and Streamlabs?</summary><p>Stream Forge is being built around modern streaming workflows. Supported integrations will be clearly listed as release testing is completed.</p></details>
+        <details class="reveal"><summary>Where can I report a bug?</summary><p>Bug reporting and support links will be added before the public release.</p></details>
+      </div>
     </section>
   </main>
 
   <footer>
-    <a class="brand footer-brand" href="#top"><img src="assets/stream-forge-logo.png" alt="" /><span>STREAM <strong>FORGE</strong></span></a>
-    <p>Forge Your Stream.</p>
-    <div><a href="#features">Features</a><a href="#download">Download</a><a href="#faq">Support</a></div>
+    <div class="footer-top">
+      <a class="brand" href="#top"><img src="assets/stream-forge-logo.png" alt="" /><span>STREAM <strong>FORGE</strong></span></a>
+      <div class="footer-links"><a href="#features">Features</a><a href="#videos">Videos</a><a href="#download">Download</a><a href="#faq">Support</a></div>
+    </div>
     <small>© <span id="year"></span> Stream Forge. Created by DarknaYTG.</small>
   </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const menuButton = document.querySelector('.menu-toggle');
+    const nav = document.getElementById('main-nav');
+    menuButton.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(open));
+    });
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', 'false');
+    }));
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
+
+    const canvas = document.getElementById('embers');
+    const ctx = canvas.getContext('2d');
+    let embers = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth * devicePixelRatio;
+      canvas.height = window.innerHeight * devicePixelRatio;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      embers = Array.from({ length: Math.min(70, Math.floor(window.innerWidth / 18)) }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: Math.random() * 1.8 + 0.4,
+        speed: Math.random() * 0.55 + 0.15,
+        drift: (Math.random() - 0.5) * 0.25,
+        alpha: Math.random() * 0.55 + 0.15
+      }));
+    }
+
+    function drawEmbers() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      for (const ember of embers) {
+        ember.y -= ember.speed;
+        ember.x += ember.drift;
+        if (ember.y < -10) {
+          ember.y = window.innerHeight + 10;
+          ember.x = Math.random() * window.innerWidth;
+        }
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255, 118, 34, ${ember.alpha})`;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = 'rgba(255, 92, 18, .65)';
+        ctx.arc(ember.x, ember.y, ember.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(drawEmbers);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    drawEmbers();
+  </script>
 </body>
 </html>
