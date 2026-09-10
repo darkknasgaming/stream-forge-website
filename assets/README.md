@@ -1,54 +1,46 @@
-# Stream Forge Website v2
+# Stream Forge Website v4
 
-Official static website for **forgeyourstream.com**. Designed for GitHub Pages with no build step.
+Static GitHub Pages site for https://forgeyourstream.com
+
+## What changed
+
+- Updated product positioning for Stream Forge 9.4.207-era features.
+- Added PRISM Live Studio support and Live Docks.
+- Added built-in Music, Song Requests, Remote, community tools, Full Backup and Ko-fi positioning.
+- Removed the obsolete paid/Pro pricing plan. Stream Forge is presented as free software with optional Ko-fi support.
+- Replaced empty video placeholders with useful current product sections.
+- Added a real setup guide for OBS/PRISM, Browser Source audio, Live Docks, Music, Remote and updates.
+- Added a clearly labelled future Forge Modules direction section without presenting unreleased features as available.
+- Added automatic latest-release lookup from the public GitHub Releases API. The site falls back safely to `/releases/latest` if the API cannot be reached.
+- Added a root 404 page and cleaned obsolete duplicate HTML files out of `assets/`.
 
 ## Publish
 
-1. Extract the ZIP.
-2. Upload every file and folder to the root of your public GitHub website repository.
-3. In **Settings → Pages**, select **Deploy from a branch**, then `main` and `/ (root)`.
-4. Keep the included `CNAME` file.
+Upload the contents of this folder to the repository root, preserving:
 
-## Adding real short demo videos
+- `index.html`
+- `tutorials.html`
+- `404.html`
+- `styles.css`
+- `script.js`
+- `assets/stream-forge-logo.png`
+- `CNAME`
+- `.nojekyll`
 
-Record clips at 1920×1080 or 1280×720, ideally 15–45 seconds. Export muted/autoplay-friendly files as WebM and/or MP4.
+GitHub Pages should continue using the `main` branch and repository root.
 
-Place them in:
+## Downloads
 
-```text
-assets/videos/mission-control.webm
-assets/videos/music-overlay.webm
-assets/videos/overlay-studio.webm
-```
+The site's download links always have a static fallback to:
 
-Then replace the image inside a `.video-shell` in `index.html` with:
+`https://github.com/darkknasgaming/Stream-Forge-Releases/releases/latest`
 
-```html
-<video autoplay muted loop playsinline poster="assets/images/mission-control-alt.png">
-  <source src="assets/videos/mission-control.webm" type="video/webm">
-  <source src="assets/videos/mission-control.mp4" type="video/mp4">
-</video>
-```
+When the page loads, `script.js` also checks the public GitHub Releases API. If available, it updates the displayed version/date and points Download buttons directly at the latest `.exe` asset.
 
-Keep homepage clips compressed. A good target is below 4–6 MB each.
+This means future public releases should not require a website edit just to update the download version.
 
-## Adding YouTube tutorials
+## Videos
 
-On `tutorials.html`, replace a tutorial card image with a responsive YouTube iframe, or link each card to the full YouTube tutorial. Full tutorials are better hosted on YouTube; the homepage should use short local clips.
+The old empty demo-video section was removed from the public homepage so visitors no longer see placeholder text such as `Add mission-control.mp4`.
 
-## Change the download link
-
-Open `download.html` and replace the GitHub Releases URL if needed:
-
-```text
-https://github.com/darkknasgaming/Stream-Forge/releases
-```
-
-## Main files
-
-- `index.html` — homepage
-- `tutorials.html` — tutorial library
-- `download.html` — release/download page
-- `assets/css/styles.css` — all styling
-- `assets/js/site.js` — reveal animations and year
-- `CNAME` — custom domain
+The `assets/videos/` folder is retained for future real clips.
