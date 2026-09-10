@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Stream Forge Tutorials</title>
-  <meta name="description" content="Learn how to install, configure and use Stream Forge.">
+  <meta name="theme-color" content="#08090b">
+  <title>Stream Forge Setup Guide</title>
+  <meta name="description" content="Practical setup guide for Stream Forge, OBS Studio, PRISM Live Studio, Browser Source audio, Live Docks, music and backups.">
   <link rel="icon" href="assets/stream-forge-logo.png">
   <link rel="stylesheet" href="styles.css">
   <script defer src="script.js"></script>
@@ -13,32 +14,88 @@
   <canvas id="embers" aria-hidden="true"></canvas>
   <header class="site-header">
     <a class="brand" href="index.html"><img src="assets/stream-forge-logo.png" alt=""><span>STREAM <strong>FORGE</strong></span></a>
-    <nav><a href="index.html">Home</a><a href="index.html#videos">Videos</a><a class="nav-cta" href="index.html#download">Download</a></nav>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+    <nav id="main-nav"><a href="index.html">Home</a><a href="#quick-start">Quick Start</a><a href="#audio">Audio</a><a href="#live-docks-guide">Live Docks</a><a class="nav-cta" data-download-link href="https://github.com/darkknasgaming/Stream-Forge-Releases/releases/latest">Download</a></nav>
   </header>
 
   <main class="subpage">
     <section class="section page-hero reveal">
+      <div class="release-chip"><span class="live-dot"></span><span data-latest-version>v1.5.1 Alpha 9.4.207</span><span class="chip-divider">•</span><span>Setup Guide</span></div>
       <p class="eyebrow">Learn the forge</p>
-      <h1>Stream Forge tutorials.</h1>
-      <p>Clear, practical guides for getting your stream setup ready.</p>
+      <h1>Get Stream Forge ready <span>without the faff.</span></h1>
+      <p>Start with Platform Hub, connect your broadcast software, run Quick Setup, check Browser Source audio, then test before going Public.</p>
     </section>
 
-    <section class="section tutorial-grid">
-      <article class="tutorial-card reveal"><span>01</span><h2>Install Stream Forge</h2><p>Download, install and complete the first launch.</p><a href="#" aria-label="Installation tutorial coming soon">Video coming soon</a></article>
-      <article class="tutorial-card reveal"><span>02</span><h2>Connect Streamlabs</h2><p>Connect your streaming software and verify scene control.</p><a href="#">Video coming soon</a></article>
-      <article class="tutorial-card reveal"><span>03</span><h2>Create Your Scenes</h2><p>Configure Starting Soon, Gameplay, Music, BRB and Ending.</p><a href="#">Video coming soon</a></article>
-      <article class="tutorial-card reveal"><span>04</span><h2>Set Up Music Overlays</h2><p>Add now-playing information and the animated waveform.</p><a href="#">Video coming soon</a></article>
-      <article class="tutorial-card reveal"><span>05</span><h2>Customize Overlay Studio</h2><p>Change names, backgrounds, themes and visual details.</p><a href="#">Video coming soon</a></article>
-      <article class="tutorial-card reveal"><span>06</span><h2>Discord Webhooks</h2><p>Connect one or more webhooks for stream notifications.</p><a href="#">Video coming soon</a></article>
-      <article class="tutorial-card reveal"><span>07</span><h2>Global Hotkeys</h2><p>Trigger scenes and actions while another app is focused.</p><a href="#">Video coming soon</a></article>
-      <article class="tutorial-card reveal"><span>08</span><h2>Back Up Your Setup</h2><p>Export your data and restore it safely later.</p><a href="#">Video coming soon</a></article>
+    <section id="quick-start" class="section guide-section">
+      <div class="section-heading reveal"><p class="eyebrow">Quick start</p><h2>From install to first test.</h2></div>
+      <div class="steps-grid">
+        <article class="guide-card reveal"><span class="step-number">01</span><h3>Install Stream Forge</h3><p>Download the latest Windows installer from GitHub Releases and install it. Windows SmartScreen may warn while Alpha builds remain unsigned.</p></article>
+        <article class="guide-card reveal"><span class="step-number">02</span><h3>Open Platform Hub</h3><p>Platform Hub is the starting point for connecting your broadcast engine and platform workflow.</p></article>
+        <article class="guide-card reveal"><span class="step-number">03</span><h3>Connect OBS or PRISM</h3><p>Enable the broadcast application's WebSocket server and connect Stream Forge. PRISM uses the same OBS-compatible WebSocket path.</p></article>
+        <article class="guide-card reveal"><span class="step-number">04</span><h3>Run Quick Setup</h3><p>Use <strong>Set Up OBS For Me</strong> or the equivalent PRISM setup action. Stream Forge creates or repairs its recommended scenes and Browser Sources without intentionally duplicating them.</p></article>
+        <article class="guide-card reveal"><span class="step-number">05</span><h3>Add Your Game Capture</h3><p>Your gameplay capture remains your choice. Add the game/window/capture source you want to the Gameplay scene in your broadcast software.</p></article>
+        <article class="guide-card reveal"><span class="step-number">06</span><h3>Check Audio & Test</h3><p>Check the Browser Source audio settings below, then run a short Unlisted stream and listen from the viewer side before your first Public stream.</p></article>
+      </div>
+    </section>
+
+    <section id="scenes" class="section guide-section">
+      <div class="section-heading reveal"><p class="eyebrow">Scenes vs Browser Sources</p><h2>One distinction saves a lot of confusion.</h2></div>
+      <div class="two-column-guide reveal">
+        <div><h3>Scene</h3><p>A Scene is the full screen/layout your viewers see — for example Starting Soon, Gameplay, BRB, Music or Ending.</p></div>
+        <div><h3>Browser Source</h3><p>A Browser Source is one item placed inside a Scene — for example an alert overlay, music bar, song request overlay, logo or community/avatar layer.</p></div>
+      </div>
+      <div class="callout reveal"><strong>Important:</strong> Not every Stream Forge URL is a full scene. Do not create a separate OBS/PRISM scene for every Stream Forge URL.</div>
+    </section>
+
+    <section id="audio" class="section guide-section">
+      <div class="section-heading reveal"><p class="eyebrow">Browser Source audio</p><h2>Do this after automatic setup.</h2><p>Automated scene/source creation is useful, but the final Browser Source audio check should stay visible and under your control.</p></div>
+      <div class="audio-guide-grid">
+        <article class="guide-card reveal"><span class="guide-badge good">ENABLE AUDIO</span><h3>Sound-producing sources</h3><p>Open each source's Properties and enable <strong>Control audio via OBS</strong> for:</p><ul><li>Starting</li><li>Alerts</li><li>Redeems</li><li>BRB</li><li>Music</li><li>VLC Music Bar</li><li>Song Requests</li><li>Ending</li></ul></article>
+        <article class="guide-card reveal"><span class="guide-badge">NO AUDIO NEEDED</span><h3>Visual-only sources</h3><p>You normally do not need Browser Source audio for:</p><ul><li>Logo</li><li>Gameplay Community / Avatars</li></ul><p>Afterwards, make sure expected audio sources appear in the mixer and are not muted.</p></article>
+      </div>
+      <div class="callout warning reveal"><strong>Recommended:</strong> run a short Unlisted stream and listen from another device or viewer session before going Public.</div>
+    </section>
+
+    <section id="live-docks-guide" class="section guide-section">
+      <div class="section-heading reveal"><p class="eyebrow">Live Docks</p><h2>Deep setup in the app. Fast controls in the dock.</h2></div>
+      <div class="guide-card wide-guide reveal">
+        <p>The Live Docks hub puts frequently used live controls in one place. Individual docks intentionally hide normal app navigation so they stay focused while you're streaming.</p>
+        <div class="dock-tags"><span>Music</span><span>Redeems</span><span>Shoutouts</span><span>Timed Messages</span><span>Forge Studio</span><span>Custom Commands</span><span>Discord Safety Center</span><span>DroidOS Chat Lab</span><span>Scene Automation</span><span>Media & Alerts</span></div>
+      </div>
+    </section>
+
+    <section id="music" class="section guide-section">
+      <div class="section-heading reveal"><p class="eyebrow">Music & song requests</p><h2>Stream Forge has its own player.</h2></div>
+      <div class="two-column-guide reveal">
+        <div><h3>Streamer music</h3><p>Use the built-in music system for playback, Now Playing information and the Music Dock's live controls for play/pause, skip, stop, mute and volume.</p></div>
+        <div><h3>Viewer song requests</h3><p>Viewer-requested tracks enter Stream Forge's request queue. When the stream enters Ending, Stream Forge stops active playback and clears pending requests so the jukebox does not restart your outro.</p></div>
+      </div>
+    </section>
+
+    <section id="remote" class="section guide-section">
+      <div class="section-heading reveal"><p class="eyebrow">Remote control</p><h2>Pair another device with the QR workflow.</h2></div>
+      <div class="guide-card wide-guide reveal"><p>Use Stream Forge Remote on your local network for convenient scene, music and stream controls from another device. Pair through the built-in QR workflow rather than exposing Stream Forge control ports directly to the public internet.</p></div>
+    </section>
+
+    <section id="backup" class="section guide-section">
+      <div class="section-heading reveal"><p class="eyebrow">Backup & updates</p><h2>Keep your setup safe.</h2></div>
+      <div class="audio-guide-grid">
+        <article class="guide-card reveal"><h3>Full Backup</h3><p>Create a Full Backup before major experiments or configuration changes. Stream Forge's backup system is designed to preserve your streamer data and setup.</p></article>
+        <article class="guide-card reveal"><h3>Updating</h3><p>Use Stream Forge's update check or the public GitHub Releases page. Once the newer version is installed and opens correctly, you can delete the <strong>older downloaded installer .exe</strong>. Do not delete installed application or data folders.</p></article>
+      </div>
+    </section>
+
+    <section class="section download reveal">
+      <div><p class="eyebrow">Ready?</p><h2>Download the latest public build.</h2><p>The release page includes the installer and SHA256 checksum.</p></div>
+      <a class="button primary large" data-download-link href="https://github.com/darkknasgaming/Stream-Forge-Releases/releases/latest">Download Latest — Free</a>
     </section>
   </main>
 
   <footer>
     <a class="brand footer-brand" href="index.html"><img src="assets/stream-forge-logo.png" alt=""><span>STREAM <strong>FORGE</strong></span></a>
     <p>Forge Your Stream.</p>
-    <small>© <span id="year"></span> Stream Forge. Created by DarknaYTG.</small>
+    <div><a href="index.html">Home</a><a href="#quick-start">Quick Start</a><a href="#audio">Audio</a><a href="https://github.com/darkknasgaming/Stream-Forge-Releases/releases" target="_blank" rel="noopener">Releases</a></div>
+    <small>© <span id="year"></span> Stream Forge. Free software for streamers.</small>
   </footer>
 </body>
 </html>
